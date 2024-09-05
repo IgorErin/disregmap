@@ -2,70 +2,81 @@ package disasterdb
 
 import (
 	"context"
-	"github.com/jmoiron/sqlx"
 	"log"
+
+	"github.com/jmoiron/sqlx"
 )
 
 type Disaster struct {
-	Id             int    `db: id`
-	RegionId       int    `db: region_id`
-	TypeInfoId     int    `db: type_info_id`
-	JScore         int    `db: j_score`
-	Source         string `db: source`
-	Description    string `db: description`
-	DetailedSource string `db: detailed_source`
+	Id       int `db:"id"`
+	RegionId int `db:"region_id"`
+	// TODO(add fields)
+	// TypeInfoId     int    `db: type_info_id`
+	// JScore         int    `db: j_score`
+	// Source         string `db: source`
+	// Description    string `db: description`
+	// DetailedSource string `db: detailed_source`
 
-	YearStart  int `db: year_start`
-	StartDay   int `db: start_day`
-	StartMonth int `db: start_month`
+	YearStart  int `db:"year_start"`
+	StartDay   int `db:"start_day"`
+	StartMonth int `db:"start_month"`
 
-	YearEnd  int `db: year_end`
-	EndDay   int `db: end_day`
-	EndMonth int `db: end_month`
+	YearEnd  int `db:"year_end"`
+	EndDay   int `db:"end_day"`
+	EndMonth int `db:"end_month"`
 
-	Casualties int `db: casualties`
+	// Casualties int `db: casualties`
 
-	DamageAmount   int    `db: damage_amount`
-	DamageCurrency string `db: damage_currency`
-}
-
-type TypeInfo struct {
-	Id   int    `db: id`
-	Name string `db: name`
-}
-
-type Region struct {
-	Id   int    `db: id`
-	Name string `db: name`
+	// DamageAmount   int    `db: damage_amount`
+	// DamageCurrency string `db: damage_currency`
 }
 
 func QueryDisaster(ctx context.Context, db *sqlx.DB) []Disaster {
-	rows, err := db.QueryContext(ctx, `SELECT * FROM disasters`)
+	query := `
+	SELECT
+		id, region_id, year_start,
+		start_day, start_month, year_end,
+		end_day, end_month
+	FROM disasters`
+
+	var res []Disaster
+
+	err := db.Select(&res, query)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer rows.Close()
 
-	var result []Disaster
+	return res
+}
 
-	for rows.Next() {
-		err := sqlx.StructScan(rows, &result)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-
-	if err := rows.Err(); err != nil {
-		log.Fatal(err)
-	}
-
-	return result
+type TypeInfo struct {
+	Id   int    `db:"id"`
+	Name string `db:"name"`
 }
 
 func QueryTypeInfo(ctx context.Context, db *sqlx.DB) []TypeInfo {
-	return nil
+	var res []TypeInfo
+
+	err := db.Select(&res, "SELECT id, name from type_infos")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return res
+}
+
+type Region struct {
+	Id   int    `db:"id"`
+	Name string `db:"name"`
 }
 
 func QueryRegion(ctx context.Context, db *sqlx.DB) []Region {
-	return nil
+	var res []Region
+
+	err := db.Select(&res, "SELECT id, name from type_infos")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return res
 }
