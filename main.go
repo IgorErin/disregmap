@@ -3,13 +3,16 @@ package main
 
 import (
 	"context"
-	"github.com/jmoiron/sqlx"
+	"fmt"
 	"log"
 	"os"
 
-	"db/disasterdb"
-	"fmt"
 	_ "github.com/jackc/pgx/v4/stdlib"
+	"github.com/jmoiron/sqlx"
+
+	"db/disasterdb"
+	"db/jtable"
+	// "strings"
 )
 
 func main() {
@@ -25,7 +28,8 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
-	res := disasterdb.QueryDisaster(ctx, db)
+	disasters := disasterdb.Retriev(ctx, db)
+	jsonbytes := jtable.ToJson(ctx, disasters)
 
-	fmt.Println(res)
+	fmt.Println(string(jsonbytes))
 }
