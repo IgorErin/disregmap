@@ -28,7 +28,7 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
-	disasters := disasterdb.Retriev(ctx, db)
+	disasters := disasterdb.Retriev(ctx, db)[:1]
 	jsonbytes := jtable.ToJson(ctx, disasters)
 
 	fmt.Println(string(jsonbytes))

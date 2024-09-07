@@ -72,7 +72,7 @@ type Region struct {
 func QueryRegion(ctx context.Context, db *sqlx.DB) []Region {
 	var res []Region
 
-	err := db.Select(&res, "SELECT id, name from type_infos")
+	err := db.Select(&res, "SELECT id, name from regions")
 	if err != nil {
 		log.Fatal(err)
 	}
