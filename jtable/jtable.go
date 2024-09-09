@@ -420,7 +420,7 @@ type row struct {
 }
 
 func toRow(act disasterdb.Action) row {
-	startDate :=  timeFormat(act.StartDate) 
+	startDate := timeFormat(act.StartDate) 
 
 	return row {
 		Titel: "",
