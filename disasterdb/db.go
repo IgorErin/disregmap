@@ -13,7 +13,7 @@ type Disaster struct {
 	TypeInfoId     int    `db:"type_info_id"`
 	// JScore         int    `db:"j_score"`
 	// Source         string `db:"source"`
-	// Description    string `db:"description"`
+	Description    string `db:"description"`
 	// DetailedSource string `db:"detailed_source"`
 
 	YearStart  int `db:"year_start"`
@@ -35,7 +35,8 @@ func QueryDisaster(ctx context.Context, db *sqlx.DB) []Disaster {
 	SELECT
 		id, region_id, year_start,
 		start_day, start_month, year_end,
-		end_day, end_month
+		end_day, end_month,
+		description
 	FROM disasters`
 
 	var res []Disaster
@@ -92,6 +93,8 @@ type Action struct {
 
 	StartDate Date  
 	EndDate Date
+
+	Description string
 }
 
 func Retriev(ctx context.Context, db *sqlx.DB) []Action {
@@ -123,6 +126,8 @@ func Retriev(ctx context.Context, db *sqlx.DB) []Action {
 
 			StartDate: Date {Day: d.StartDay, Moth: d.StartMonth, Year: d.YearStart },
 			EndDate: Date {Day: d.EndDay, Moth: d.EndMonth, Year: d.YearEnd },
+
+			Description: d.Description,
 		})
 	}
 

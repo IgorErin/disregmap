@@ -40,7 +40,7 @@ func toRow(act disasterdb.Action) row {
 		Titel: "",
 		Start: startDate,
 		End: startDate, // for now, strange values in tables
-		Description: "",
+		Description: act.Description,
 		Image: "",
 		Place: "",
 		Location: lookupCoordinates(act.Region),
