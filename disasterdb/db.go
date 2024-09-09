@@ -11,7 +11,7 @@ type Disaster struct {
 	Id       int `db:"id"`
 	RegionId int `db:"region_id"`
 	TypeInfoId     int    `db:"type_info_id"`
-	JScore         float32    `db:"j_score"`
+	// JScore         float32    `db:"j_score"`
 	// Source         string `db:"source"`
 	Description    string `db:"description"`
 	// DetailedSource string `db:"detailed_source"`
@@ -129,7 +129,6 @@ func Retriev(ctx context.Context, db *sqlx.DB) []Action {
 			EndDate: Date {Day: d.EndDay, Moth: d.EndMonth, Year: d.YearEnd },
 
 			Description: d.Description,
-			JScore: d.JScore,
 		})
 	}
 
