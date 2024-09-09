@@ -35,9 +35,8 @@ type row struct {
 
 func toRow(act disasterdb.Action) row {
 	startDate := timeFormat(act.StartDate) 
-
 	return row {
-		Titel: "",
+		Titel: fmt.Sprintf("%f", act.JScore),
 		Start: startDate,
 		End: startDate, // for now, strange values in tables
 		Description: act.Description,
