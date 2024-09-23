@@ -1,8 +1,6 @@
-# cringedisasters
+# desregmap
 
-Data base mapping application of disasters effects
-
-## only `json` supported now
+Disasters regin mapping tool for data insertion. Consult with me before usage.
 
 # Install
 
